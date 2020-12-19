@@ -1,27 +1,33 @@
 import java.io.*;
 import java.net.Socket;
 
-public class Client {
+public class Client2 {
 
     private Socket socket;
-    private OutputStream outputStream;
+    private PrintWriter printWriter;
     private BufferedReader bufferedReader;
     private String read;
     private String write;
+
+    public void setName( String name ) {
+        this.name = name;
+    }
+
     private String name;
 
-    public Client() throws IOException {
-        socket= new Socket("localhost", 888);
-        outputStream= socket.getOutputStream();
+    public Client2() throws IOException {
+        socket= new Socket("localhost", 8234);
+        printWriter = new PrintWriter(socket.getOutputStream(),true);
         bufferedReader= new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-    public void read() throws IOException {
+    public String read() throws IOException {
         read= bufferedReader.readLine();
+        return read;
     }
 
     public void write(String text) throws IOException {
         write=text;
-        outputStream.write((name+":"+write).getBytes());
+        printWriter.println(name+": "+write);
     }
 }

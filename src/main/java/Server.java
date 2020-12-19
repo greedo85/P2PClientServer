@@ -1,32 +1,33 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
     private ServerSocket serverSocket;
+
     private Socket socket;
     private BufferedReader bufferedReader;
-    private OutputStream outputStream;
+    private PrintWriter printWriter;
     private String read;
     private String write;
+    public void setSocket() throws IOException {
+         socket=serverSocket.accept();
+    }
 
-
-    public Server(int port) throws IOException {
+    public Server( int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
         this.socket = serverSocket.accept();
         this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        this.outputStream = socket.getOutputStream();
+        this.printWriter =new PrintWriter(socket.getOutputStream(),true);
     }
 
-    public void read() throws IOException {
-        read= bufferedReader.readLine();
+    public String read() throws IOException {
+        read = bufferedReader.readLine();
+        return read;
     }
 
-    public void send(String text) throws IOException {
+    public void write(String text) throws IOException {
         write=text;
-        outputStream.write(text.getBytes());
+        printWriter.println("server: "+text);
     }
 }
