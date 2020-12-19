@@ -1,6 +1,8 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
     private ServerSocket serverSocket;
@@ -8,26 +10,30 @@ public class Server {
     private Socket socket;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
-    private String read;
-    private String write;
-    public void setSocket() throws IOException {
-         socket=serverSocket.accept();
+    List<Socket> socketList;
+
+    public void setStreams() throws IOException {
+        bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        printWriter = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public Server( int port) throws IOException {
+    public void acceptClient() throws IOException {
+        socket = serverSocket.accept();
+        socketList.add(socket);
+        System.out.println("podłączono klienta:" + socket.getPort());
+    }
+
+    public Server( int port ) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.socket = serverSocket.accept();
-        this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        this.printWriter =new PrintWriter(socket.getOutputStream(),true);
+        socketList = new ArrayList<>();
     }
 
-    public String read() throws IOException {
-        read = bufferedReader.readLine();
-        return read;
-    }
+    public void write() throws IOException {
+        for (Socket c : socketList) {
+            if (!socketList.equals(c)) {
+                printWriter.println("server: " + bufferedReader.readLine());
+            }
 
-    public void write(String text) throws IOException {
-        write=text;
-        printWriter.println("server: "+text);
+        }
     }
 }
