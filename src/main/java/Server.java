@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,11 @@ public class Server {
     }
 
     public Server( int port ) throws IOException {
-        this.serverSocket = new ServerSocket(port);
+        try {
+            this.serverSocket = new ServerSocket(port);
+        } catch (SocketException e) {
+            System.exit(0);
+        }
         socketList = new ArrayList<>();
     }
 
