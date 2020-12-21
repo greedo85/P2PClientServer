@@ -19,7 +19,7 @@ public class Server {
             socket = serverSocket.accept();
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printWriter = new PrintWriter(socket.getOutputStream(), true);
-            ClientHandler clientHandler=new ClientHandler(printWriter,bufferedReader,socket);
+            ClientHandler clientHandler=new ClientHandler(printWriter,bufferedReader,socket,clientHandlers);
             Thread thread=new Thread(clientHandler);
             clientHandlers.add(clientHandler);
             System.out.println("podłączono klienta:" + socket.getPort());
@@ -31,36 +31,7 @@ public class Server {
         serverSocket = new ServerSocket(port);
         clientHandlers = new ArrayList<>();
     }
-    class ClientHandler implements Runnable{
 
-        private PrintWriter printWriter;
-        private BufferedReader bufferedReader;
-        Socket socket;
-
-        public ClientHandler( PrintWriter printWriter, BufferedReader bufferedReader, Socket socket ) {
-            this.printWriter = printWriter;
-            this.bufferedReader = bufferedReader;
-            this.socket = socket;
-        }
-
-
-        @Override
-        public void run() {
-            while (true)
-            {
-                try
-                {
-                    String received=bufferedReader.readLine();
-                    System.out.println(received);
-                    for (ClientHandler ch: clientHandlers) {
-                        ch.printWriter.println(received);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
 
 }

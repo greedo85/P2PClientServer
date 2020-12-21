@@ -28,7 +28,6 @@ public class ClientMain {
             while (true) {
                 client.write(scanner.nextLine());
             }
-
         });
         readMessage.start();
         sendMessage.start();
