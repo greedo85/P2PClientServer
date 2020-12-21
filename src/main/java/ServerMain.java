@@ -3,8 +3,8 @@ import java.net.SocketException;
 import java.util.Scanner;
 
 public class ServerMain {
-    static Server server;
 
+    static Server server;
     static {
         try {
             server = new Server(8234);
