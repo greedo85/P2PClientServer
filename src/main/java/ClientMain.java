@@ -26,11 +26,7 @@ public class ClientMain {
         });
         Thread sendMessage = new Thread(() -> {
             while (true) {
-                try {
-                    client.write(scanner.nextLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                client.write(scanner.nextLine());
             }
 
         });

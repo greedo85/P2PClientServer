@@ -12,11 +12,7 @@ public class Client {
     private String name;
 
     public Client() throws IOException {
-        try {
-            socket = new Socket("localhost", 8234);
-        } catch (SocketException e) {
-            System.exit(0);
-        }
+        socket = new Socket("localhost", 8234);
         printWriter = new PrintWriter(socket.getOutputStream(), true);
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
@@ -35,13 +31,15 @@ public class Client {
             read = bufferedReader.readLine();
 
         } catch (SocketException e) {
+            bufferedReader.close();
+            printWriter.close();
+            socket.close();
             System.exit(0);
-
         }
         return read;
     }
 
-    public void write( String text ) throws IOException {
+    public void write( String text ) {
         write = text;
         printWriter.println(name + ": " + write);
     }

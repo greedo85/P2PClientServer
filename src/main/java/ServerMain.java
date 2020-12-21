@@ -15,29 +15,7 @@ public class ServerMain {
 
     public static void main( String[] args ) throws IOException {
         server.acceptClient();
-        server.setStreams();
-        Thread writeToClients = new Thread(() -> {
-            while (true) {
-                try {
-                    server.write();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
 
-        });
-        Thread acceptClients=new Thread(()->
-        {
-            while(true) {
-                try {
-                    server.acceptClient();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        acceptClients.start();
-        writeToClients.start();
     }
 
 }
