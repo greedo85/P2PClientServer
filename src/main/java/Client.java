@@ -20,12 +20,7 @@ public class Client {
     public void setName( String name ) {
         this.name = name;
     }
-
-
-    public Socket getSocket() {
-        return socket;
-    }
-
+    
     public String read() throws IOException {
         try {
             read = bufferedReader.readLine();
