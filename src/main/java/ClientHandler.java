@@ -5,7 +5,11 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.List;
 
+<<<<<<< HEAD
 class ClientHandler implements Runnable {
+=======
+public class ClientHandler implements Runnable{
+>>>>>>> 7001e913ac7efa042d218fcdd5265fdd90315759
 
     private PrintWriter printWriter;
     private BufferedReader bufferedReader;
@@ -22,8 +26,15 @@ class ClientHandler implements Runnable {
 
     @Override
     public void run() {
+<<<<<<< HEAD
         while (true) {
             try {
+=======
+        while (true)
+        {
+            try
+            {
+>>>>>>> 7001e913ac7efa042d218fcdd5265fdd90315759
                 String received="";
                 try {
                     received = bufferedReader.readLine();
@@ -39,4 +50,5 @@ class ClientHandler implements Runnable {
             }
         }
     }
-}
+
+
