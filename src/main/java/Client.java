@@ -12,7 +12,7 @@ public class Client {
     private String name;
 
     public Client() throws IOException {
-        socket = new Socket("localhost", 8234);
+        socket = new Socket("192.168.1.100", 8234);
         printWriter = new PrintWriter(socket.getOutputStream(), true);
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }

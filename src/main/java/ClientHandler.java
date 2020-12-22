@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.List;
 
-class ClientHandler implements Runnable{
+public class ClientHandler implements Runnable{
 
     private PrintWriter printWriter;
     private BufferedReader bufferedReader;
@@ -25,7 +25,7 @@ class ClientHandler implements Runnable{
         {
             try
             {
-                String received;
+                String received="";
                 try {
                      received= bufferedReader.readLine();
                 }
