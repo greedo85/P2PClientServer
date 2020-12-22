@@ -2,32 +2,31 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Server {
     private ServerSocket serverSocket;
-
     private Socket socket;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
-    private String read;
-    private String write;
-    public void setSocket() throws IOException {
-         socket=serverSocket.accept();
+    List<ClientHandler> clientHandlers;
+
+    public void acceptClient() throws IOException {
+        while (true) {
+            socket = serverSocket.accept();
+            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            printWriter = new PrintWriter(socket.getOutputStream(), true);
+            ClientHandler clientHandler = new ClientHandler(printWriter, bufferedReader, socket, clientHandlers);
+            clientHandlers.add(clientHandler);
+            Thread thread = new Thread(clientHandler);
+            System.out.println("podłączono klienta:" + socket.getPort());
+            thread.start();
+        }
     }
 
-    public Server( int port) throws IOException {
-        this.serverSocket = new ServerSocket(port);
-        this.socket = serverSocket.accept();
-        this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        this.printWriter =new PrintWriter(socket.getOutputStream(),true);
-    }
-
-    public String read() throws IOException {
-        read = bufferedReader.readLine();
-        return read;
-    }
-
-    public void write(String text) throws IOException {
-        write=text;
-        printWriter.println("server: "+text);
+    public Server( int port ) throws IOException {
+        serverSocket = new ServerSocket(port);
+        clientHandlers = new ArrayList<>();
     }
 }

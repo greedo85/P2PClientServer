@@ -1,13 +1,13 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Clien1tMain {
+public class ClientMain {
     static Scanner scanner = new Scanner(System.in);
-    static Client1 client1;
+    static Client client;
 
     static {
         try {
-            client1 = new Client1();
+            client = new Client();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -15,31 +15,26 @@ public class Clien1tMain {
 
     public static void main( String[] args ) {
         setName();
-        Thread thread1 = new Thread(() -> {
+        Thread readMessage = new Thread(() -> {
             while (true)
                 try {
-                    System.out.println(client1.read());
+                    System.out.println(client.read());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
         });
-        Thread thread2 = new Thread(() -> {
+        Thread sendMessage = new Thread(() -> {
             while (true) {
-                try {
-                    client1.write(scanner.nextLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                client.write(scanner.nextLine());
             }
-
         });
-        thread1.start();
-        thread2.start();
+        readMessage.start();
+        sendMessage.start();
     }
 
     static synchronized void setName() {
         System.out.println("Wpisz imię: ");
-        client1.setName(scanner.nextLine());
+        client.setName(scanner.nextLine());
     }
 }
