@@ -1,5 +1,6 @@
 package GUI;
 
+import ClientService.ClientMain;
 import com.sun.security.ntlm.Client;
 import com.sun.xml.internal.ws.handler.ClientMessageHandlerTube;
 
