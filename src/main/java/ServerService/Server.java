@@ -1,3 +1,7 @@
+package ServerService;
+
+import ClientService.ClientHandler;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,7 +16,7 @@ public class Server {
     private PrintWriter printWriter;
     List<ClientHandler> clientHandlers;
 
-    public void acceptClient() throws IOException {
+    public void runServer() throws IOException {
         while (true) {
             socket = serverSocket.accept();
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));

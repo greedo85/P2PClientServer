@@ -1,3 +1,5 @@
+package ClientService;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
