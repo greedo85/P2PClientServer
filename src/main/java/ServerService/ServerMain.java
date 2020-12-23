@@ -1,6 +1,6 @@
+package ServerService;
+
 import java.io.IOException;
-import java.net.SocketException;
-import java.util.Scanner;
 
 public class ServerMain {
 
@@ -14,8 +14,7 @@ public class ServerMain {
     }
 
     public static void main( String[] args ) throws IOException {
-        server.acceptClient();
-
+        server.runServer();
     }
 
 }
