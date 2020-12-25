@@ -1,4 +1,4 @@
-package GUI;
+package ClientService.GUI;
 
 
 import ClientService.Client;
@@ -9,10 +9,11 @@ import javafx.stage.Stage;
 import lombok.Getter;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 @Getter
 public class GUI extends Application {
-
+    Scanner scanner=new Scanner(System.in);
     private Scene scene;
     private BorderPane borderPane;
     private BoxElements boxElements;
@@ -33,18 +34,13 @@ public class GUI extends Application {
             {
                 boxElements.setMessage(boxElements.getMessageField().getText());
                 client.write(boxElements.getMessage());
-                System.out.println("message: " + boxElements.getMessage());
-
             });
         });
         readMessage = new Thread(() -> {
             while (true)
                 try {
 
-                    System.out.println("Wątek readMessage");
-                    System.out.println("client.read()");
-                   // boxElements.getUserMessagesTextArea().appendText(client.read());
-                    boxElements.getUserMessagesTextArea().appendText(client.getBufferedReader().readLine());
+                    boxElements.getUserMessagesTextArea().appendText(client.read()+"\n");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -57,7 +53,13 @@ public class GUI extends Application {
         scene = new Scene(borderPane, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
+        setName();
         sendMessage.start();
         readMessage.start();
+
+    }
+    public synchronized void setName() {
+        System.out.println("Wpisz imię: ");
+        client.setName(scanner.nextLine());
     }
 }

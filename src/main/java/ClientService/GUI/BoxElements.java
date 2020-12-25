@@ -1,4 +1,4 @@
-package GUI;
+package ClientService.GUI;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

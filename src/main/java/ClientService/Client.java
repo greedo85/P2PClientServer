@@ -1,6 +1,5 @@
 package ClientService;
 
-import GUI.*;
 import lombok.Getter;
 
 import java.io.*;
@@ -14,7 +13,6 @@ public class Client {
     private PrintWriter printWriter;
     private BufferedReader bufferedReader;
     private String read;
-    private String write;
     private String name = "testowyKlient";
 
     public Client() throws IOException {
@@ -40,8 +38,8 @@ public class Client {
     }
 
     public void write( String msg ) {
-        write = msg;
-        printWriter.println(name + ": " + write);
+
+        printWriter.println(name + ": " + msg);
     }
 
 }

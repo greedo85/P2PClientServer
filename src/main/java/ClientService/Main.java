@@ -1,11 +1,7 @@
-package GUI;
+package ClientService;
 
-import ClientService.Client;
+import ClientService.GUI.GUI;
 import javafx.application.Application;
-
-
-import java.io.IOException;
-
 
 
 public class Main {

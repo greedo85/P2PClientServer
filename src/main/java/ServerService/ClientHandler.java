@@ -1,7 +1,5 @@
 package ServerService;
 
-import GUI.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,7 +37,7 @@ public class ClientHandler implements Runnable {
                 }
                 for (ClientHandler ch : clientHandlerList) {
 
-                    ch.printWriter.println(received+"\n");
+                    ch.printWriter.println(received);
 
                 }
             } catch (IOException e) {
