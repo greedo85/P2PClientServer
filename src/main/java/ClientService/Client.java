@@ -14,17 +14,15 @@ public class Client {
     private BufferedReader bufferedReader;
     private String read;
     private String name = "testowyKlient";
-   
 
-    public Client( String ip, int port) throws IOException {
+
+    public Client( String ip, int port, String name) throws IOException {
+        this.name=name;
         socket = new Socket(ip, port);
         printWriter = new PrintWriter(socket.getOutputStream(), true);
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-    public void setName( String name ) {
-        this.name = name;
-    }
 
     public String read() throws IOException {
         try {

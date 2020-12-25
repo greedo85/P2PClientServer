@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 @Getter
 public class GUI extends Application {
-    Scanner scanner=new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
     private Scene scene;
     private BorderPane borderPane;
     private BoxElements boxElements;
@@ -22,6 +22,8 @@ public class GUI extends Application {
     Thread readMessage;
     int port;
     String ip;
+    String name;
+
     public GUI() {
 
         boxElements = new BoxElements();
@@ -41,7 +43,7 @@ public class GUI extends Application {
             while (true)
                 try {
 
-                    boxElements.getUserMessagesTextArea().appendText(client.read()+"\n");
+                    boxElements.getUserMessagesTextArea().appendText(client.read() + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -55,23 +57,23 @@ public class GUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         setConnectionData();
-        client = new Client(ip,port);
+        client = new Client(ip, port, name);
         setName();
         sendMessage.start();
         readMessage.start();
 
     }
+
     public synchronized void setName() {
         System.out.println("Wpisz imię: ");
-        client.setName(scanner.nextLine());
+        name = scanner.nextLine();
     }
 
-    public synchronized void setConnectionData()
-    {
+    public synchronized void setConnectionData() {
         System.out.println("Podaj ip serwera: ");
-        ip=scanner.nextLine();
+        ip = scanner.nextLine();
         System.out.println("Podaj port serwera: ");
-        port=scanner.nextInt();
+        port = scanner.nextInt();
     }
 
 
