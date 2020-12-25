@@ -53,6 +53,7 @@ public class GUI extends Application {
         scene = new Scene(borderPane, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
+        setConnectionData();
         setName();
         sendMessage.start();
         readMessage.start();
@@ -62,4 +63,14 @@ public class GUI extends Application {
         System.out.println("Wpisz imię: ");
         client.setName(scanner.nextLine());
     }
+
+    public synchronized void setConnectionData()
+    {
+        System.out.println("Podaj ip serwera: ");
+        client.setIp(scanner.nextLine());
+        System.out.println("Podaj port serwera: ");
+        client.setPort(scanner.nextInt());
+    }
+
+
 }
