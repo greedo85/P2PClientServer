@@ -4,6 +4,9 @@ package ClientService.GUI;
 import ClientService.Client;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -14,18 +17,18 @@ import java.util.Scanner;
 @Getter
 public class GUI extends Application {
     Scanner scanner = new Scanner(System.in);
-    private Scene scene;
+    private Scene mainScene, loginScene;
     private BorderPane borderPane;
     private BoxElements boxElements;
     private Client client;
-    Thread sendMessage;
-    Thread readMessage;
-    int port;
-    String ip;
-    String name;
+    private Thread sendMessage, readMessage ;
+    private int port;
+    private String ip, name;
+    private SetConnectionWindow setConnectionWindow;
 
     public GUI() {
 
+        setConnectionWindow=new SetConnectionWindow();
         boxElements = new BoxElements();
         borderPane = new BorderPane();
         borderPane.setLeft(boxElements.userListVbox());
@@ -42,7 +45,6 @@ public class GUI extends Application {
         readMessage = new Thread(() -> {
             while (true)
                 try {
-
                     boxElements.getUserMessagesTextArea().appendText(client.read() + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -52,29 +54,35 @@ public class GUI extends Application {
 
     @Override
     public void start( Stage primaryStage ) throws IOException {
+
         primaryStage.setTitle("Okno klienta");
-        scene = new Scene(borderPane, 500, 400);
-        primaryStage.setScene(scene);
+        loginScene = new Scene(setConnectionWindow.getGridPane(),500,400);
+        mainScene = new Scene(borderPane, 500, 400);
+        primaryStage.setScene(loginScene);
         primaryStage.show();
-        setConnectionData();
-        client = new Client(ip, port, name);
-        setName();
+        setConnectionWindow.getLoginButton().setOnAction(log->
+        {
+            setValues();
+            try {
+                client = new Client(ip, port, name);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            primaryStage.setScene(mainScene);
+        });
         sendMessage.start();
         readMessage.start();
 
     }
-
-    public synchronized void setName() {
-        System.out.println("Wpisz imię: ");
-        name = scanner.nextLine();
+    public synchronized void setValues()
+    {
+        name=setConnectionWindow.getNameField().getText();
+        ip=setConnectionWindow.getIpField().getText();
+        port=Integer.valueOf(setConnectionWindow.getPortField().getText());
     }
 
-    public synchronized void setConnectionData() {
-        System.out.println("Podaj ip serwera: ");
-        ip = scanner.nextLine();
-        System.out.println("Podaj port serwera: ");
-        port = scanner.nextInt();
-    }
+
 
 
 }
