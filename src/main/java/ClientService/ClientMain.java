@@ -1,9 +1,11 @@
 package ClientService;
 
+import GUI.GUI;
+
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ClientMain {
+public class ClientMain  {
     static Scanner scanner = new Scanner(System.in);
     static Client client;
 
@@ -16,6 +18,7 @@ public class ClientMain {
     }
 
     public static void main( String[] args ) {
+
         setName();
         Thread readMessage = new Thread(() -> {
             while (true)

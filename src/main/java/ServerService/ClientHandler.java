@@ -1,4 +1,6 @@
-package ClientService;
+package ServerService;
+
+import GUI.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,9 +9,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.List;
 
-
 public class ClientHandler implements Runnable {
-
 
     private PrintWriter printWriter;
     private BufferedReader bufferedReader;
@@ -27,23 +27,26 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
 
+        String received = null;
         while (true) {
             try {
-                String received = "";
                 try {
                     received = bufferedReader.readLine();
+                    System.out.println("otrzymano: " + received);
+
                 } catch (SocketException e) {
                     System.exit(0);
                 }
-                System.out.println(received);
                 for (ClientHandler ch : clientHandlerList) {
-                    ch.printWriter.println(received);
+
+                    ch.printWriter.println(received+"\n");
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
 
+    }
 }
 
