@@ -38,7 +38,6 @@ public class Client {
     }
 
     public void write( String msg ) {
-
         printWriter.println(name + ": " + msg);
     }
 

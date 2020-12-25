@@ -30,7 +30,7 @@ public class ClientHandler implements Runnable {
             try {
                 try {
                     received = bufferedReader.readLine();
-                    System.out.println("otrzymano: " + received);
+
 
                 } catch (SocketException e) {
                     System.exit(0);
