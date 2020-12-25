@@ -20,14 +20,15 @@ public class GUI extends Application {
     private Client client;
     Thread sendMessage;
     Thread readMessage;
-    public GUI() throws IOException {
+    int port;
+    String ip;
+    public GUI() {
 
         boxElements = new BoxElements();
         borderPane = new BorderPane();
         borderPane.setLeft(boxElements.userListVbox());
         borderPane.setCenter(boxElements.textAreaVbox());
         borderPane.setBottom(boxElements.sendMessageHbox());
-        client = new Client();
         sendMessage = new Thread(() -> {
 
             boxElements.getSendButton().setOnAction(msg ->
@@ -48,12 +49,13 @@ public class GUI extends Application {
     }
 
     @Override
-    public void start( Stage primaryStage ) {
+    public void start( Stage primaryStage ) throws IOException {
         primaryStage.setTitle("Okno klienta");
         scene = new Scene(borderPane, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
         setConnectionData();
+        client = new Client(ip,port);
         setName();
         sendMessage.start();
         readMessage.start();
@@ -67,9 +69,9 @@ public class GUI extends Application {
     public synchronized void setConnectionData()
     {
         System.out.println("Podaj ip serwera: ");
-        client.setIp(scanner.nextLine());
+        ip=scanner.nextLine();
         System.out.println("Podaj port serwera: ");
-        client.setPort(scanner.nextInt());
+        port=scanner.nextInt();
     }
 
 

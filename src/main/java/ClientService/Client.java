@@ -14,18 +14,9 @@ public class Client {
     private BufferedReader bufferedReader;
     private String read;
     private String name = "testowyKlient";
-    private String ip;
-    private int port;
+   
 
-    public void setIp( String ip ) {
-        this.ip = ip;
-    }
-
-    public void setPort( int port ) {
-        this.port = port;
-    }
-
-    public Client() throws IOException {
+    public Client( String ip, int port) throws IOException {
         socket = new Socket(ip, port);
         printWriter = new PrintWriter(socket.getOutputStream(), true);
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
