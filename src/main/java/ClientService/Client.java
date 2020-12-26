@@ -16,9 +16,9 @@ public class Client {
     private String name = "testowyKlient";
 
 
-    public Client( String ip, String port, String name) throws IOException {
+    public Client( String ip, int port, String name) throws IOException {
         this.name=name;
-        socket = new Socket(ip, Integer.parseInt(port));
+        socket = new Socket(ip, port);
         printWriter = new PrintWriter(socket.getOutputStream(), true);
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }

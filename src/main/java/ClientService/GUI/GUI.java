@@ -22,7 +22,7 @@ public class GUI extends Application {
     private BoxElements boxElements;
     private Client client;
     private Thread sendMessage, readMessage;
-    private String port;
+    private int port;
     private String ip, name;
     private SetConnectionWindow setConnectionWindow;
 
@@ -63,18 +63,17 @@ public class GUI extends Application {
         mainScene = new Scene(borderPane, 500, 400);
         primaryStage.setScene(loginScene);
         primaryStage.show();
-        //setValues();
+     
         setConnectionWindow.getLoginButton().setOnAction(log ->
         {
             name = setConnectionWindow.getNameField().getText();
             ip = setConnectionWindow.getIpField().getText();
-            port = setConnectionWindow.getPortField().getText();
+            port = Integer.parseInt(setConnectionWindow.getPortField().getText());
             try {
                 client = new Client(ip, port, name);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             primaryStage.setScene(mainScene);
         });
         sendMessage.start();
@@ -82,11 +81,11 @@ public class GUI extends Application {
 
     }
 
-    public synchronized void setValues() {
+    /*public synchronized void setValues() {
         name = setConnectionWindow.getNameField().getText();
         ip = setConnectionWindow.getIpField().getText();
         port = setConnectionWindow.getPortField().getText();
-    }
+    }*/
 
 
 }
