@@ -21,14 +21,14 @@ public class GUI extends Application {
     private BorderPane borderPane;
     private BoxElements boxElements;
     private Client client;
-    private Thread sendMessage, readMessage ;
-    private int port;
+    private Thread sendMessage, readMessage;
+    private String port;
     private String ip, name;
     private SetConnectionWindow setConnectionWindow;
 
     public GUI() {
 
-        setConnectionWindow=new SetConnectionWindow();
+        setConnectionWindow = new SetConnectionWindow();
         boxElements = new BoxElements();
         borderPane = new BorderPane();
         borderPane.setLeft(boxElements.userListVbox());
@@ -48,6 +48,9 @@ public class GUI extends Application {
                     boxElements.getUserMessagesTextArea().appendText(client.read() + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
+                }catch (NullPointerException e)
+                {
+                    e.printStackTrace();
                 }
         });
     }
@@ -56,13 +59,16 @@ public class GUI extends Application {
     public void start( Stage primaryStage ) throws IOException {
 
         primaryStage.setTitle("Okno klienta");
-        loginScene = new Scene(setConnectionWindow.getGridPane(),500,400);
+        loginScene = new Scene(setConnectionWindow.getGridPane(), 500, 400);
         mainScene = new Scene(borderPane, 500, 400);
         primaryStage.setScene(loginScene);
         primaryStage.show();
-        setConnectionWindow.getLoginButton().setOnAction(log->
+        //setValues();
+        setConnectionWindow.getLoginButton().setOnAction(log ->
         {
-            setValues();
+            name = setConnectionWindow.getNameField().getText();
+            ip = setConnectionWindow.getIpField().getText();
+            port = setConnectionWindow.getPortField().getText();
             try {
                 client = new Client(ip, port, name);
             } catch (IOException e) {
@@ -75,14 +81,12 @@ public class GUI extends Application {
         readMessage.start();
 
     }
-    public synchronized void setValues()
-    {
-        name=setConnectionWindow.getNameField().getText();
-        ip=setConnectionWindow.getIpField().getText();
-        port=Integer.valueOf(setConnectionWindow.getPortField().getText());
+
+    public synchronized void setValues() {
+        name = setConnectionWindow.getNameField().getText();
+        ip = setConnectionWindow.getIpField().getText();
+        port = setConnectionWindow.getPortField().getText();
     }
-
-
 
 
 }
