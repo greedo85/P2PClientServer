@@ -1,12 +1,14 @@
 package ServerService;
 
+import lombok.Getter;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
 public class Server {
     private ServerSocket serverSocket;
     private Socket socket;

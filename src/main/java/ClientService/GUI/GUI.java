@@ -3,20 +3,24 @@ package ClientService.GUI;
 
 import ClientService.Client;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import lombok.Getter;
 
 import java.io.IOException;
 import java.util.Scanner;
 
+import static java.lang.System.*;
+
 @Getter
 public class GUI extends Application {
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(in);
     private Scene mainScene, loginScene;
     private BorderPane borderPane;
     private BoxElements boxElements;
@@ -50,7 +54,7 @@ public class GUI extends Application {
                     e.printStackTrace();
                 }catch (NullPointerException e)
                 {
-                    e.printStackTrace();
+                    continue;
                 }
         });
     }
@@ -63,7 +67,7 @@ public class GUI extends Application {
         mainScene = new Scene(borderPane, 500, 400);
         primaryStage.setScene(loginScene);
         primaryStage.show();
-     
+
         setConnectionWindow.getLoginButton().setOnAction(log ->
         {
             name = setConnectionWindow.getNameField().getText();
@@ -75,6 +79,16 @@ public class GUI extends Application {
                 e.printStackTrace();
             }
             primaryStage.setScene(mainScene);
+        });
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    System.exit(0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
         sendMessage.start();
         readMessage.start();
