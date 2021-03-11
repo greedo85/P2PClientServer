@@ -24,21 +24,16 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-
         String received = null;
         while (true) {
             try {
                 try {
                     received = bufferedReader.readLine();
-
-
                 } catch (SocketException e) {
                     System.exit(0);
                 }
                 for (ClientHandler ch : clientHandlerList) {
-
                     ch.printWriter.println(received);
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();

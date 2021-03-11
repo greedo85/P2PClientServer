@@ -52,8 +52,7 @@ public class GUI extends Application {
                     boxElements.getUserMessagesTextArea().appendText(client.read() + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
-                }catch (NullPointerException e)
-                {
+                } catch (NullPointerException e) {
                     continue;
                 }
         });
@@ -82,7 +81,7 @@ public class GUI extends Application {
         });
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) {
+            public void handle( WindowEvent event ) {
                 try {
                     System.exit(0);
                 } catch (Exception e) {
